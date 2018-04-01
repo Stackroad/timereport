@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+  <title>Per Welander</title>
+  <meta name="Per Welander" content="">
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" type="text/css" href="css/normalize.css">
+  <link rel="stylesheet" type="text/css" href="css/skeleton.css">
+
+</head>
+<body>
+
+  <!-- Primary Page Layout
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+<div class="container" style="margin-top: 5%">
+  <a class="button" href="/timereports">Back to recorded times</a>
+  <form method="POST" action="/create">
+  <div class="row">
+    <div class="six columns">
+      <label for="date">Your date</label>
+      <input class="u-full-width" type="date" placeholder="date" id="date" name="date">
+    </div>
+    <div class="six columns">
+      <label for="minutes">Your email</label>
+      <input class="u-full-width" type="number" placeholder="minutes" id="minutes" name="minutes">
+    </div>
+  </div>
+  <div class="row">
+    <div class="six columns">
+      <label for="company">Your company</label>
+      <input class="u-full-width" type="text" placeholder="company" id="company" name="company">
+    </div>
+    <div class="six columns">
+      <label for="project">Your project</label>
+      <input class="u-full-width" type="text" placeholder="project" id="project" name="project">
+    </div>
+  </div>
+  <input class="button-primary" type="submit" value="Submit">
+</form>
+</div>
+
+<!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+</body>
+</html>
