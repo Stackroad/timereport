@@ -47,6 +47,11 @@ var TimeReports = mongoose.model('timereport', timeReportSchema );
 
 app.use(express.static('public'));
 
+
+app.get('/', function (req, res) {
+   res.render('welcome');
+})
+
 app.get('/create', function (req, res) {
    res.render('create');
 })
