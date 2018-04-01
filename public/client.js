@@ -2,7 +2,7 @@ var calculateTotalMinutes = function(){
   axios.get('/calculate-total-minutes')
     .then(function (response) {
       var totalHoursElement = document.getElementById("totalhours");
-      totalHoursElement.textContent =  response.data.totalminutes;
+      totalHoursElement.textContent =  response.data.totalminutes / 60;
     })
     .catch(function (error) {
       console.log(error);
