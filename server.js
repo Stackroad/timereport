@@ -1,6 +1,6 @@
 var express = require('express');
 var path = require("path")
-var badyParser = require('body-parser')
+var bodyParser = require('body-parser')
 var app = express();
 var mongoose = require('mongoose');
 var mustacheExpress = require('mustache-express');
@@ -9,9 +9,10 @@ var moment = require('moment');
 // adds mustache to end of file
 app.engine('mustache', mustacheExpress());
 app.set('view engine', 'mustache');
-
-// create application/x-www-form-urlencoded parser
-var urlencodedParser = badyParser.urlencoded({ extended: false })
+app.use( bodyParser.json() );       // to support JSON-encoded bodies
+app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+  extended: true
+}));
 
 //Set up default mongoose connection
 var mongoDB = 'mongodb://127.0.0.1/mydb';
@@ -47,7 +48,6 @@ var TimeReports = mongoose.model('timereport', timeReportSchema );
 
 app.use(express.static('public'));
 
-
 app.get('/', function (req, res) {
    res.render('welcome');
 })
@@ -69,9 +69,24 @@ app.get('/calculate-total-minutes', function (req, res) {
   })
 })
 
-app.post('/create', urlencodedParser, function (req, res) {
+app.post('/calculate-total-minutes-within-date', function (req, res) {
+  var totalminutes = 0;
+  var start_date = moment(req.body.start_date)
+  var end_date = moment(req.body.end_date)
+  TimeReports.find(
+    {"date": {"$gte": start_date, "$lt": end_date}},
+    function (err, timeReports) {
+      for (var key in timeReports) {
+        if (timeReports[key]["minutes"] != null) {
+          totalminutes += timeReports[key]["minutes"];
+        }
+      }
+    res.json({totalminutes : totalminutes})
+    })
+})
+
+app.post('/create', function (req, res) {
   var insert = new TimeReports(req.body);
-  //Save the new model instance, passing a callback
   insert.save(function (err) {
     if (err) return handleError(err);
     res.redirect('/timereports');
@@ -81,6 +96,11 @@ app.post('/create', urlencodedParser, function (req, res) {
 app.get('/timereports', function (req, res) {
   TimeReports.find(function (err, timeReports) {
     if (err) return handleError(err);
+    timeReports.sort(function(a, b) {
+    a = new Date(a.date);
+    b = new Date(b.date);
+    return a>b ? -1 : a<b ? 1 : 0;
+    });
     res.render('index', {entries1 : timeReports});
   })
 })

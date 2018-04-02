@@ -277,7 +277,7 @@ select:focus {
   border: 1px solid #33C3F0;
   outline: 0; }
 label {
-  color: white;
+  color: black;
 }
 legend {
   display: block;
